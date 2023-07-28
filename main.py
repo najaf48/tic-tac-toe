@@ -5,6 +5,7 @@ class tic_tac_toe:
     def __init__(self) -> None:
         pygame.init()
         self.player_X=True
+        self.playing = True
         self.setting = Settings()
         self.color = self.setting.color
         self.screen = pygame.display.set_mode((self.setting.screen_width,self.setting.screen_height))
@@ -22,10 +23,11 @@ class tic_tac_toe:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN and self.playing:
                 if event.button == 1:
                     position=self.board.which_cell(event.pos[0],event.pos[1])
                     is_occupied = self.board.is_occupied(position)
+
                     if self.player_X and self.board.is_occupied(position):
                         
                         pygame.draw.rect(self.screen,self.setting.bgcolor,(0,0,400,50))
@@ -37,6 +39,10 @@ class tic_tac_toe:
                         self.board.draw_cross(line1,line2,self.setting.color)
                         
                         self.board.edit_representation(position,'x')
+                        if self.board.check_win():
+                            pygame.draw.rect(self.screen,self.setting.bgcolor,(0,0,400,50))
+                            self.board.draw_text("PLAYER X WON",self.setting.color)
+                            self.playing = False
                         self.player_X = False
 
                     elif (not self.player_X) and self.board.is_occupied(position):
@@ -48,6 +54,10 @@ class tic_tac_toe:
                         self.board.draw_ring(pos,self.setting.color)
                         
                         self.board.edit_representation(position,'o')
+                        if self.board.check_win():
+                            pygame.draw.rect(self.screen,self.setting.bgcolor,(0,0,400,50))
+                            self.board.draw_text("PLAYER O WON",self.setting.color)
+                            self.playing = False
                         self.player_X = True
 
     def _update_screen(self):

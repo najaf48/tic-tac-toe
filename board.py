@@ -11,7 +11,22 @@ class Board:
                        [[50,250],[250,250],[450,250]],
                        [[50,450],[250,450],[450,450]]]
 
-    
+    def check_win(self):
+        #horizontal win
+        for i in self.board_representation:
+            if i[0]==i[1] and i[1]==i[2] and i[0]!='_':
+                return True
+        #vertical check
+        for i in range(3):
+            if self.board_representation[0][i]==self.board_representation[1][i] and self.board_representation[1][i]==self.board_representation[2][i] and self.board_representation[0][i]!='_':
+                return True
+        #diagonals check
+        if self.board_representation[0][0]==self.board_representation[1][1] and self.board_representation[1][1]==self.board_representation[2][2] and self.board_representation[0][0]!='_':
+            return True
+        
+        if self.board_representation[0][2]==self.board_representation[1][1] and self.board_representation[1][1]==self.board_representation[2][0] and self.board_representation[0][2]!='_':
+            return True
+        
     def draw_board(self,color:tuple):
         # self.screen.fill((0,0,0))
         pygame.draw.line(self.screen,color,[250,50],[250,650],3)
@@ -38,6 +53,7 @@ class Board:
             return True
         else:
             return False
+    
     def edit_representation(self,cord,symbol):
         for i in range(3):
             for j in range(3):
