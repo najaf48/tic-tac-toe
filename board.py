@@ -46,7 +46,7 @@ class Board:
         img = self.font.render(text,True,color)
         self.screen.blit(img,(5,5))
     
-    def is_occupied(self,cord):
+    def is_empty(self,cord):
         i = int((cord[0]-50)/200)
         j = int((cord[1]-50)/200)
         if self.board_representation[j][i]=='_':
@@ -64,4 +64,5 @@ class Board:
         for cord in self.cords:
             if (x>cord[0] and x<(cord[0]+200)) and (y>cord[1] and y<(cord[1]+200)):
                 return cord
+        return None
     
