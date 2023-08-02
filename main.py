@@ -2,6 +2,7 @@ import pygame,sys
 from settings import Settings
 from board import Board
 from bot import Bot
+import minmax
 
 class tic_tac_toe:
     def __init__(self) -> None:
@@ -11,7 +12,6 @@ class tic_tac_toe:
         self.playing = True
         self.both_bot = False
         self.bot = Bot()
-        self.bot_chance=True
         self.setting = Settings()
         self.color = self.setting.color
         self.screen = pygame.display.set_mode((self.setting.screen_width,self.setting.screen_height))
@@ -36,15 +36,17 @@ class tic_tac_toe:
                         break
                     is_empty = self.board.is_empty(position)
                     if self.is_X_bot:
-                        if self.bot_chance:
-                            position = self.bot.bot_choice(self.board.board_representation)
+                        if self.player_X:
+                            # position = self.bot.bot_choice(self.board.board_representation)
+                            position = minmax.findBestMove(self.board.board_representation)
+                            position=self.board.cords1[position[0]][position[1]]
                             self.player_X_chance(position)
                             self.checkWin("X")
-                            self.bot_chance = False
-                        elif (not self.bot_chance) and is_empty:
+                            self.player_X = False
+                        elif (not self.player_X) and is_empty:
                             self.player_O_chance(position)
                             self.checkWin("O")
-                            self.bot_chance = True
+                            self.player_X = True
                     else:
                         if self.player_X and is_empty:
                             self.player_X_chance(position)
@@ -78,6 +80,7 @@ class tic_tac_toe:
             pygame.draw.rect(self.screen,self.setting.bgcolor,(0,0,400,50))
             self.board.draw_text(f"PLAYER {player} WON",self.setting.color)
             self.playing = False
+
 if __name__=="__main__":
     game = tic_tac_toe()
     game.run()
