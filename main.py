@@ -11,7 +11,7 @@ class tic_tac_toe:
         self.playing = True
         self.both_bot = False
         self.bot = Bot()
-        self.bot_chance=False
+        self.bot_chance=True
         self.setting = Settings()
         self.color = self.setting.color
         self.screen = pygame.display.set_mode((self.setting.screen_width,self.setting.screen_height))
