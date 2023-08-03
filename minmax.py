@@ -1,6 +1,6 @@
 player = 'x'
 opponent = 'o'
-bestmove = (-1,-1)
+# bestmove = (-1,-1)
 def evaluate(board_representation):
     #horizontal check
     for i in board_representation:
@@ -44,7 +44,7 @@ def findBestMove(board_representation):
         for j in range(3):
             if board_representation[i][j]=='_':
                 board_representation[i][j]=player
-                moveval=minmax(board_representation,True)
+                moveval=minmax(board_representation,False)
                 board_representation[i][j]='_'
                 if moveval>best:
                     best = moveval
@@ -59,7 +59,6 @@ def minmax(board_representation,isMax):
         return 0
     if isMax:
         best = -1000
-
         for i in range(3):
             for j in range(3):
                 if board_representation[i][j]=='_':
@@ -73,7 +72,6 @@ def minmax(board_representation,isMax):
         return best
     else:
         best = 1000
-
         for i in range(3):
             for j in range(3):
                 if board_representation[i][j]=='_':
@@ -83,10 +81,10 @@ def minmax(board_representation,isMax):
         return best
     
 
-board_representation = [['x','o','x'],
-                      ['_','o','_'],
-                      ['_','_','_']]
+# board_representation = [['x','o','x'],
+#                       ['_','o','_'],
+#                       ['_','_','o']]
 # a=minmax(board_representation,True)
 # print(a)
 # print(bestmove)
-print(findBestMove(board_representation))
+# print(findBestMove(board_representation))

@@ -7,7 +7,7 @@ import minmax
 class tic_tac_toe:
     def __init__(self) -> None:
         pygame.init()
-        self.player_X=True
+        self.player_X=False
         self.is_X_bot = True
         self.playing = True
         self.both_bot = False
@@ -18,8 +18,11 @@ class tic_tac_toe:
         self.screen.fill(self.setting.bgcolor)
         self.board = Board(self.screen)
         self.board.draw_board(self.setting.color)
-        self.board.draw_text("Player X chance",self.setting.color)
-    
+        if self.player_X:
+            self.board.draw_text("Player X chance",self.setting.color)
+        else:
+            self.board.draw_text("Player O chance",self.setting.color)
+
     def run(self):
         while True:
             self._check_events()
@@ -39,6 +42,8 @@ class tic_tac_toe:
                         if self.player_X:
                             # position = self.bot.bot_choice(self.board.board_representation)
                             position = minmax.findBestMove(self.board.board_representation)
+                            if position == (-1,-1):
+                                break
                             position=self.board.cords1[position[0]][position[1]]
                             self.player_X_chance(position)
                             self.checkWin("X")

@@ -59,6 +59,7 @@ class Board:
             for j in range(3):
                 if cord == [(200*i)+50,(200*j)+50]:
                     self.board_representation[j][i]=symbol
+        print(self.board_representation)
 
     def which_cell(self,x,y):
         for cord in self.cords:
